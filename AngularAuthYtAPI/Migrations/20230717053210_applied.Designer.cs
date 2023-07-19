@@ -4,6 +4,7 @@ using AngularAuthYtAPI.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AngularAuthYtAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230717053210_applied")]
+    partial class applied
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,43 +101,6 @@ namespace AngularAuthYtAPI.Migrations
                     b.ToTable("appliedjobstable", (string)null);
                 });
 
-            modelBuilder.Entity("AngularAuthYtAPI.Models.Applied", b =>
-                {
-                    b.Property<int>("JobId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("JobId"), 1L, 1);
-
-                    b.Property<string>("CompanyName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Experience")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("JobDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("JobTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("JobType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("PostedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Skills")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("JobId");
-
-                    b.ToTable("appliedjob", (string)null);
-                });
-
             modelBuilder.Entity("AngularAuthYtAPI.Models.jobs", b =>
                 {
                     b.Property<int>("JobId")
@@ -144,6 +109,9 @@ namespace AngularAuthYtAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("JobId"), 1L, 1);
 
+                    b.Property<bool>("Applied")
+                        .HasColumnType("bit");
+
                     b.Property<string>("CompanyName")
                         .HasColumnType("nvarchar(max)");
 
@@ -168,48 +136,9 @@ namespace AngularAuthYtAPI.Migrations
                     b.Property<string>("Skills")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("ischecked")
-                        .HasColumnType("bit");
-
                     b.HasKey("JobId");
 
                     b.ToTable("job", (string)null);
-                });
-
-            modelBuilder.Entity("AngularAuthYtAPI.Models.Resumes", b =>
-                {
-                    b.Property<int>("ResumeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ResumeId"), 1L, 1);
-
-                    b.Property<byte[]>("FileData")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("FileName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FilePath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("JobId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ResumeId");
-
-                    b.HasIndex("JobId");
-
-                    b.ToTable("Resumes", (string)null);
                 });
 
             modelBuilder.Entity("AngularAuthYtAPI.Models.User", b =>
@@ -250,17 +179,6 @@ namespace AngularAuthYtAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("users", (string)null);
-                });
-
-            modelBuilder.Entity("AngularAuthYtAPI.Models.Resumes", b =>
-                {
-                    b.HasOne("AngularAuthYtAPI.Models.jobs", "job")
-                        .WithMany()
-                        .HasForeignKey("JobId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("job");
                 });
 #pragma warning restore 612, 618
         }
